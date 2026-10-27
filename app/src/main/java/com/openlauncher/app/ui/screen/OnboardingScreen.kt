@@ -110,7 +110,10 @@ fun OnboardingScreen(
         )
 
         Row(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                // Keep content clear of system bars on head units that refuse to hide them
+                .windowInsetsPadding(WindowInsets.safeDrawing)
         ) {
             // ── Left branding pane ──────────────────────────────────────────
             Column(
