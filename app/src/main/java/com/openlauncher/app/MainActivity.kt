@@ -260,14 +260,18 @@ class MainActivity : ComponentActivity() {
                             }
                         }
 
+                        // Keep content clear of system bars on head units that refuse to hide
+                        // them; backgrounds/wallpaper above stay full-bleed
+                        val contentModifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)
+
                         if (isBottomBar) {
-                            Column(modifier = Modifier.fillMaxSize()) {
+                            Column(modifier = contentModifier) {
                                 mainPane(Modifier.weight(1f).fillMaxWidth())
                                 androidx.compose.material3.HorizontalDivider(color = layoutDivColor)
                                 sidebarContent()
                             }
                         } else {
-                            Row(modifier = Modifier.fillMaxSize()) {
+                            Row(modifier = contentModifier) {
                                 val vDivider: @Composable () -> Unit = {
                                     androidx.compose.material3.VerticalDivider(
                                         modifier = Modifier.fillMaxHeight(),
