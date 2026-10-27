@@ -104,8 +104,8 @@ data class AppSettings(
     val speedometerDigitalOnly: Boolean = false,
     val gradientDirection: GradientDirection = GradientDirection.DIAGONAL,
     val useCustomBackgroundColor: Boolean = false,
-    // Off by default: some head unit firmware (e.g. FYT) reports the nav bar as hidden
-    // while still drawing it, which leaves content underneath it
+    // Off by default: some head units draw a replacement bar (e.g. an accessibility
+    // overlay) over the system nav bar, which stays on screen when the nav bar is hidden
     val hideNavigationBar: Boolean = false
 )
 
