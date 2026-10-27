@@ -42,22 +42,27 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun hideSystemBars() {
+    private fun applySystemBarVisibility() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowCompat.getInsetsController(window, window.decorView).apply {
-            hide(WindowInsetsCompat.Type.systemBars())
+            hide(WindowInsetsCompat.Type.statusBars())
+            if (vm.settings.value.hideNavigationBar) {
+                hide(WindowInsetsCompat.Type.navigationBars())
+            } else {
+                show(WindowInsetsCompat.Type.navigationBars())
+            }
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemBars()
+        if (hasFocus) applySystemBarVisibility()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hideSystemBars()
+        applySystemBarVisibility()
 
         setContent {
             val settingsLoaded by vm.settingsLoaded.collectAsStateWithLifecycle()
@@ -77,6 +82,8 @@ class MainActivity : ComponentActivity() {
             val isDayMode = if (settings.dayNightMode == DayNightMode.SYSTEM) !systemIsDark else isDayModeVM
             val pickerSlot      by vm.shortcutPickerSlot.collectAsStateWithLifecycle()
             val appPickerTarget by vm.appPickerTarget.collectAsStateWithLifecycle()
+
+            LaunchedEffect(settings.hideNavigationBar) { applySystemBarVisibility() }
 
             val accent         = Color(settings.accentColor)
             val bg             = if (settings.useCustomBackgroundColor) {

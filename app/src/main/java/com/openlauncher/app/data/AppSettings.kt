@@ -103,7 +103,10 @@ data class AppSettings(
     val vitalsAsBars: Boolean = false,
     val speedometerDigitalOnly: Boolean = false,
     val gradientDirection: GradientDirection = GradientDirection.DIAGONAL,
-    val useCustomBackgroundColor: Boolean = false
+    val useCustomBackgroundColor: Boolean = false,
+    // Off by default: some head unit firmware (e.g. FYT) reports the nav bar as hidden
+    // while still drawing it, which leaves content underneath it
+    val hideNavigationBar: Boolean = false
 )
 
 fun defaultShortcuts() = listOf(

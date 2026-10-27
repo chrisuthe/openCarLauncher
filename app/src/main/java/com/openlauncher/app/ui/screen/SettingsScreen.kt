@@ -315,6 +315,20 @@ fun SettingsScreen(
 
             SettingsDivider()
 
+            SettingsRow(
+                label    = "Hide Navigation Bar",
+                sublabel = if (settings.hideNavigationBar) "Hidden — swipe from the edge to reveal" else "Always shown — use if your head unit can't hide it",
+                icon     = Icons.Default.Fullscreen
+            ) {
+                Switch(
+                    checked         = settings.hideNavigationBar,
+                    onCheckedChange = { onUpdate { copy(hideNavigationBar = it) } },
+                    colors          = switchColors(accent)
+                )
+            }
+
+            SettingsDivider()
+
             SettingsRow(label = "Unit System", sublabel = if (settings.unitSystem == UnitSystem.METRIC) "Metric (°C, km)" else "Imperial (°F, mi)", icon = Icons.Default.Straighten) {
                 Row {
                     FilterChip(
